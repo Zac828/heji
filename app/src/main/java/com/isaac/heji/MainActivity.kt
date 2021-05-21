@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var adapter: ItemAdapter? = null
+    private lateinit var adapter: ItemAdapter
 
     private val itemModel = ItemModel()
 
@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
         rv_list.layoutManager = GridLayoutManager(this, 5)
         adapter = ItemAdapter(itemModel.getList()).also {
             it.bindToRecyclerView(rv_list)
-            it.setOnItemChildClickListener { _, _, position ->
+            it.setOnItemClickListener { _, _, position ->
                 itemModel.changeSelected(position)
-                adapter?.notifyItemChanged(position)
+                adapter.notifyItemChanged(position)
             }
         }
     }
@@ -32,6 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         itemModel.prepareData()
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 }
