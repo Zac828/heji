@@ -19,11 +19,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         rv_list.layoutManager = GridLayoutManager(this, 5)
-        adapter = ItemAdapter(itemModel.getList())
-        adapter?.bindToRecyclerView(rv_list)
-        adapter?.setOnItemClickListener { _, _, position ->
-            itemModel.changeSelected(position)
-            adapter?.notifyItemChanged(position)
+        adapter = ItemAdapter(itemModel.getList()).also {
+            it.bindToRecyclerView(rv_list)
+            it.setOnItemChildClickListener { _, _, position ->
+                itemModel.changeSelected(position)
+                adapter?.notifyItemChanged(position)
+            }
         }
     }
 
