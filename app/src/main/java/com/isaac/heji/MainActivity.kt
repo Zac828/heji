@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.isaac.heji.adapter.ItemAdapter
 import com.isaac.heji.data.ItemInfo
+import com.isaac.heji.databinding.ActivityMainBinding
 import com.isaac.heji.model.ItemModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,11 +15,14 @@ class MainActivity : AppCompatActivity() {
 
     private val itemModel = ItemModel()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        rv_list.layoutManager = GridLayoutManager(this, 5)
+        binding.rvList.layoutManager = GridLayoutManager(this, 5)
         adapter = ItemAdapter(itemModel.getList()).also {
             it.bindToRecyclerView(rv_list)
             it.setOnItemChildClickListener { _, _, position ->
